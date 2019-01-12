@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	"math"
 )
 
 func main() {
-	fmt.Println("私の好きな数字は", rand.Intn(10))
+	fmt.Println("Now you have %g problems.", math.Sqrt(7))
 }
