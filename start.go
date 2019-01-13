@@ -2,9 +2,13 @@ package main
 
 import "fmt"
 
+const Pi = 3.14
+
 func main() {
-	v := 42 
-	fmt.Printf("v is of type %T\n", v)
-	f := 3.14
-	fmt.Printf("v is of type %T\n", f)
+	const World = "世界!!"
+	fmt.Println("Hello", World)
+	fmt.Println("Happy", Pi, "Day")
+
+	const Truth = true
+	fmt.Println("Go rules?", Truth)
 }
