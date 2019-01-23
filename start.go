@@ -1,33 +1,17 @@
 package main
 
-import (
-	"fmt"
-	"math"
-)
+import "golang.org/x/tour/reader"
 
-type ErrNegativeSqrt float64
+type MyReader struct{}
 
-func (e ErrNegativeSqrt) Error() string {
-	return fmt.Sprintf("cannot Sqrt nagative number: %g", float64(e))
-}
-
-func Sqrt(x float64) (float64, error) {
-	if x < 0 {
-		return 0, ErrNegativeSqrt(x)
+// TODO: Add a Read([]byte) (int, error) method to MyReader.
+func (a MyReader) Read(rb []byte) (l int, e error) {
+	for l, e = 0, nil; l < len(rb); l++ {
+		rb[l] = 'A'
 	}
-	z := float64(2.)
-	s := float64(0)
-	for i := 0; i < 10; i++ {
-		z = z - (z*z-x)/(2*z)
-		if math.Abs(z-s) < 1e-10 {
-			break
-		}
-		s = z
-	}
-	return z, nil
+	return
 }
 
 func main() {
-	fmt.Println(Sqrt(2))
-	fmt.Println(Sqrt(-2))
+	reader.Validate(MyReader{})
 }
