@@ -1,22 +1,23 @@
 package main
 
-import (
-	"fmt"
-	"math"
-)
+import "fmt"
 
-func pow(x, n, lim float64) float64 {
-	if v := math.Pow(x, n); v < lim {
-		return v
-	} else {
-		fmt.Printf("%g >= %g\n", v, lim)
+// fibonacci is a function that returns
+// a function that returns an int.
+func fibonacci() func() int {
+	before := 0
+	after := 1
+	return func() (result int) {
+		result = before
+		before = after
+		after += result
+		return
 	}
-	return lim
 }
 
 func main() {
-	fmt.Println(
-		pow(3, 2, 10),
-		pow(3, 3, 20),
-	)
+	f := fibonacci()
+	for i := 0; i < 10; i++ {
+		fmt.Println(f())
+	}
 }
