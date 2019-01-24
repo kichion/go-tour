@@ -1,27 +1,32 @@
 package main
 
-import (
-	"golang.org/x/tour/pic"
-	"image"
-	"image/color"
-)
+import "golang.org/x/tour/tree"
 
-type Image struct{}
-
-func (img Image) Bounds() image.Rectangle {
-	return image.Rect(0, 0, 256, 256)
+// Walk walks the tree t sending all values
+// from the tree to the channel ch.
+func Walk(t *tree.Tree, ch chan int) {
+	var walkSub func(t *tree.Tree)
+	walkSub = func(t *tree.Tree) {
+        if t != nil {
+            walkSub(t.Left)
+            ch <- t.Value
+            walkSub(t.Right)
+        }
+    }
+	walkSub(t)
+	close(ch)
 }
 
-func (img Image) ColorModel() image.ColorModel {
-	return color.RGBAModel
-}
-
-func (img Image) At(x, y int) color.Color {
-	v := uint8(x^y)
-	return color.RGBA{v, v, 128, 189}
+// Same determines whether the trees
+// t1 and t2 contain the same values.
+func Same(t1, t2 *tree.Tree) bool {
+	return true
 }
 
 func main() {
-	m := Image{}
-	pic.ShowImage(m)
+	ch := make(chan int)
+	go Walk(tree.New(1), ch)
+	for v := range ch {
+        println(v)
+    }
 }
